@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geolocator_linux/geolocator_linux.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
