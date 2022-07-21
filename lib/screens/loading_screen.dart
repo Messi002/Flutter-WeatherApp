@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:precipatation/services/location.dart';
+import 'package:http/http.dart';
+
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -23,6 +25,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
      print(location.latitude);
      print(location.longitude);
   }
+
+  void getData() async{
+    Response response = await get(Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=London&appid=0a16a89df9d7af77449a9db13adae845'));
+  print(response.body);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
