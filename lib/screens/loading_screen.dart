@@ -1,8 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:precipatation/services/location.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 
 class LoadingScreen extends StatefulWidget {
@@ -17,6 +17,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
       getLocation();
+  
+  }
+
+      Future<void> getData() async{
+    final response = await http.get(Uri.parse('https://api.openweathermap.org/data/2.5/weather?lat=57&lon=-2.15&appid=0a16a89df9d7af77449a9db13adae845'));
+    print(response.statusCode);
   }
 
   void getLocation() async{
@@ -26,10 +32,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
      print(location.longitude);
   }
 
-  void getData() async{
-    Response response = await get(Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=London&appid=0a16a89df9d7af77449a9db13adae845'));
-  print(response.body);
-  }
+
 
   @override
   Widget build(BuildContext context) {
