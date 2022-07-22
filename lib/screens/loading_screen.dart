@@ -5,6 +5,7 @@ import 'package:precipatation/screens/location_screen.dart';
 import 'package:precipatation/services/location.dart';
 import 'package:precipatation/utilities/constants.dart';
 import 'package:precipatation/services/networking.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -32,28 +33,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
     NetworkHelper networkHelper = NetworkHelper(
         'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$kapiKey');
 
-    var weather = await networkHelper.getData();
+    var weatherData = await networkHelper.getData();
 
     // ignore: use_build_context_synchronously
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LocationScreen(),
+        builder: (context) => LocationScreen(LocationWeather:weatherData),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            //Get the current location
-            getLocation();
-          },
-          child: const Text('Get Location'),
-        ),
+        child: SpinKitFadingCircle(color: Colors.white, size: 100.0,),
       ),
     );
   }

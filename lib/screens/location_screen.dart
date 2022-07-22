@@ -1,12 +1,25 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
+import 'package:precipatation/services/location.dart';
 import 'package:precipatation/utilities/constants.dart';
 
 class LocationScreen extends StatefulWidget {
+
+    LocationScreen({required this.LocationWeather});
+    final dynamic LocationWeather;
+
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  @override
+  void initState() {
+    super.initState();
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

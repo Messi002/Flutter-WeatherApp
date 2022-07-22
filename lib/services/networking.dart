@@ -9,7 +9,7 @@ class NetworkHelper{
 
     final String uri;
 
-    Future<void> getData() async{
+    Future getData() async{
     //  final uri = Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=London&appid=$kapiKey');
    
       
