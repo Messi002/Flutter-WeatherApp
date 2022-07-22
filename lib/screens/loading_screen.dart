@@ -31,7 +31,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     longitude = location.longitude;
 
     NetworkHelper networkHelper = NetworkHelper(
-        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$kapiKey');
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$kapiKey&units=metric');
 
     var weatherData = await networkHelper.getData();
 
@@ -46,9 +46,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: SpinKitFadingCircle(color: Colors.white, size: 100.0,),
+    return Scaffold(
+      body: Container(
+        decoration:const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.purple, Colors.blue],
+          ),
+        ),
+        child: SpinKitRing(color: Colors.white, size: 100.0,lineWidth: 15.0,),
       ),
     );
   }

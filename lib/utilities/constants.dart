@@ -5,7 +5,7 @@ const kapiKey = '0a16a89df9d7af77449a9db13adae845';
 
 const kTempTextStyle = TextStyle(
   fontFamily: 'Spartan MB',
-  fontSize: 100.0,
+  fontSize: 40.0,
 );
 
 const kMessageTextStyle = TextStyle(
