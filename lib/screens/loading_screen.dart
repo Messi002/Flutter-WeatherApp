@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print
 
 import 'dart:convert';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:precipatation/services/location.dart';
 import 'package:http/http.dart' as http;
@@ -20,11 +20,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
     getLocation();
   }
 
-  Future<void> getData() async {
+  Future getData() async {
+            // 'https://samples.openweathermap.org/data/2.5/weather?id=524901&appid=0a16a89df9d7af77449a9db13adae845'
     // http.Response response = await http.get(Uri.parse('https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22'));
-
-    http.Response response = await http.get(Uri.parse(
-        'https://samples.openweathermap.org/data/2.5/weather?id=524901&appid=0a16a89df9d7af77449a9db13adae845'
+      final uri = Uri.parse('https://pokeapi.co/api/v2/pokemon/ditto');
+  final response = await http.get(Uri.parse(
         ));
 
     print(response.statusCode);
@@ -34,7 +34,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
      var longitude = jsonDecode(data)['coord']['lon'];
       print(longitude);
-    var weatherDescription
+    var weatherDescription = jsonDecode(data)['weather'][0]['description'];
+      print(weatherDescription);
+
     } else {
       throw Exception('Failed to load weather conditions');
     }
