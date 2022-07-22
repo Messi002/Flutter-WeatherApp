@@ -15,48 +15,49 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+    double? latitude;
+    double? longitude;
+
   @override
   void initState() {
     super.initState();
     getLocation();
+  }
+
+
+    void getLocation() async {
+    Location location = Location();
+    await location.getCurrentLocation();
+    latitude = location.latitude;
+    longitude =location.longitude;
     getData();
   }
 
   Future<void> getData() async {
-
-     final uri = Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=London&appid=$kapiKey');
-     try {
-       
+     final uri = Uri.parse('https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$kapiKey');
+    //  final uri = Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=London&appid=$kapiKey');
+   
+      
       final response = await http.get(uri);
-      String data = response.body;
-      var abilities = jsonDecode(data)['weather'][0]['description'];
+
+      if( response.statusCode==200){
+           String data = response.body;
+      var decodeData = jsonDecode(data);
+
+      double temperature = decodeData['main']['temp'];
+      int condition = decodeData['weather'][0]['id'];
+      String cityName = decodeData['name'];
+
+      print(temperature);
+      print(condition);
+      print(cityName);
+      }else {
       print(response.statusCode);
-      print(abilities);
-     } catch (e) {
-       print(e);
-       throw e;
      }
      
-
-    // if (response.statusCode == 200) {
-    //   String data = (jsonDecode(response.body)); 
-
-    //  var longitude = jsonDecode(data)['coord']['lon'];
-    //   print(longitude);
-    // var weatherDescription = jsonDecode(data)['weather'][0]['description'];
-    //   print(weatherDescription);
-
-    // } else {
-    //   throw Exception('Failed to load weather conditions');
-    // }
   }
 
-  void getLocation() async {
-    Location location = Location();
-    await location.getCurrentLocation();
-    print(location.latitude);
-    print(location.longitude);
-  }
+
 
   @override
   Widget build(BuildContext context) {
