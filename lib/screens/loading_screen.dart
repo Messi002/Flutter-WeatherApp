@@ -18,28 +18,39 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
     getLocation();
+    getData();
   }
 
   Future getData() async {
-            // 'https://samples.openweathermap.org/data/2.5/weather?id=524901&appid=0a16a89df9d7af77449a9db13adae845'
+    //  final uri = Uri.parse('https://pokeapi.co/api/v2/pokemon/ditto');
+     final uri = Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=London&appid=0a16a89df9d7af77449a9db13adae845');
+    //  final uri = Uri.parse('https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=0a16a89df9d7af77449a9db13adae845'); 
+     // 'https://samples.openweathermap.org/data/2.5/weather?id=524901&appid=0a16a89df9d7af77449a9db13adae845'
     // http.Response response = await http.get(Uri.parse('https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22'));
-      final uri = Uri.parse('https://pokeapi.co/api/v2/pokemon/ditto');
-  final response = await http.get(Uri.parse(
-        ));
+     try {
+       
+      final response = await http.get(uri);
+      String data = response.body;
+      var Abilities = jsonDecode(data)['weather'][0]['id'];
+      print(response.statusCode);
+      print(Abilities);
+     } catch (e) {
+       print(e);
+       throw e;
+     }
+     
 
-    print(response.statusCode);
+    // if (response.statusCode == 200) {
+    //   String data = (jsonDecode(response.body)); 
 
-    if (response.statusCode == 200) {
-      String data = (jsonDecode(response.body)); 
+    //  var longitude = jsonDecode(data)['coord']['lon'];
+    //   print(longitude);
+    // var weatherDescription = jsonDecode(data)['weather'][0]['description'];
+    //   print(weatherDescription);
 
-     var longitude = jsonDecode(data)['coord']['lon'];
-      print(longitude);
-    var weatherDescription = jsonDecode(data)['weather'][0]['description'];
-      print(weatherDescription);
-
-    } else {
-      throw Exception('Failed to load weather conditions');
-    }
+    // } else {
+    //   throw Exception('Failed to load weather conditions');
+    // }
   }
 
   void getLocation() async {
