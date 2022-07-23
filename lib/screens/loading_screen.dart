@@ -39,7 +39,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LocationScreen(LocationWeather:weatherData),
+        builder: (context) => LocationScreen(LocationWeather: weatherData),
       ),
     );
   }
@@ -48,14 +48,19 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration:const BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [Colors.purple, Colors.blue],
           ),
         ),
-        child: SpinKitRing(color: Colors.white, size: 100.0,lineWidth: 15.0,),
+        child:const SpinKitRing(
+          color: Colors.white,
+          size: 100.0,
+          lineWidth: 15.0,
+         
+        ),
       ),
     );
   }

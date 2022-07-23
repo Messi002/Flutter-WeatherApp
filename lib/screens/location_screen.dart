@@ -6,15 +6,15 @@ import 'package:precipatation/utilities/constants.dart';
 
 class LocationScreen extends StatefulWidget {
 
-    LocationScreen({required this.LocationWeather});
-    final dynamic LocationWeather;
+    LocationScreen({this.LocationWeather});
+    final LocationWeather;
 
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  var temperature;
+   Future<double>? temperature;
   int? condition;
   String? cityName;
 
@@ -25,13 +25,19 @@ class _LocationScreenState extends State<LocationScreen> {
     updateUI(widget.LocationWeather);
   }
    
-  void updateUI(dynamic weatherData){
-
-      var temperature = weatherData['main']['temp'];
+ void updateUI(dynamic weatherData){
+      setState(() {
+         double? temperature = weatherData['main']['temp'];
       int condition = weatherData['weather'][0]['id'];
       String cityName = weatherData['name'];
+       print(cityName);
       print(temperature);
-      print(cityName);
+      });
+  
+     
+     
+
+     
   }
 
   @override
@@ -75,8 +81,10 @@ class _LocationScreenState extends State<LocationScreen> {
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Row(
                   children: <Widget>[
-                    Text(
-                      '${temperature!=null?temperature.toString():"Loading..."}',
+                    new Text(
+                      // '$temperature',
+                      '${temperature ?? "Loading..."}',
+                    
                       style: kTempTextStyle,
                     ),
                     Text(
