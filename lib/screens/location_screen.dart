@@ -1,12 +1,12 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
-import 'package:precipatation/services/location.dart';
 import 'package:precipatation/utilities/constants.dart';
+import 'package:precipatation/services/weather.dart';
 
 class LocationScreen extends StatefulWidget {
 
-    LocationScreen({this.LocationWeather});
+    LocationScreen({super.key,this.LocationWeather});
     final LocationWeather;
 
   @override
@@ -14,10 +14,13 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-   Future<double>? temperature;
+
+    int? temperature=0;
   int? condition;
   String? cityName;
-
+  String? weatherIcon;
+  WeatherModel weatherCondition =   WeatherModel();
+  String? TempCond; 
 
   @override
   void initState() {
@@ -27,18 +30,19 @@ class _LocationScreenState extends State<LocationScreen> {
    
  void updateUI(dynamic weatherData){
       setState(() {
-         double? temperature = weatherData['main']['temp'];
-      int condition = weatherData['weather'][0]['id'];
-      String cityName = weatherData['name'];
+         var temp = weatherData['main']['temp'];
+         temperature = temp.toInt();
+      var condition = weatherData['weather'][0]['id'];
+     weatherIcon = weatherCondition.getWeatherIcon(condition);
+      var city = weatherData['name'];
+       cityName = city;
+      TempCond = weatherCondition.getMessage(temperature);
        print(cityName);
       print(temperature);
       });
-  
-     
-     
-
-     
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -77,27 +81,35 @@ class _LocationScreenState extends State<LocationScreen> {
                   ),
                 ],
               ),
+              Center(
+                child: Text(
+                      // '$temperature',
+                      cityName ?? "Loading...",
+                    
+                      style: kTempTextStyle,
+                    ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    new Text(
+                   Text(
                       // '$temperature',
-                      '${temperature ?? "Loading..."}',
+                      '${temperature ?? "Loading..."}°C',
                     
                       style: kTempTextStyle,
                     ),
                     Text(
-                      '☀️',
+                     ' $weatherIcon',
                       style: kConditionTextStyle,
                     ),
                   ],
                 ),
               ),
-              const Padding(
+             Padding(
                 padding: EdgeInsets.only(right: 15.0),
-                child: Text(
-                  "It's 🍦 time in San Francisco!",
+                child: Text( '${TempCond}',
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),
