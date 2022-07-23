@@ -2,10 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:precipatation/screens/location_screen.dart';
-import 'package:precipatation/services/location.dart';
-import 'package:precipatation/utilities/constants.dart';
-import 'package:precipatation/services/networking.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:precipatation/services/weather.dart';
+
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -24,15 +23,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void getLocation() async {
-    Location location = Location();
-    await location.getCurrentLocation();
-  
-
-    NetworkHelper networkHelper = NetworkHelper(
-        'https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$kapiKey&units=metric');
-
-    var weatherData = await networkHelper.getData();
-
+ 
+    WeatherModel weatherModel = WeatherModel();
+    var weatherData = await weatherModel.getLocationWeather();
     // ignore: use_build_context_synchronously
     Navigator.push(
       context,
@@ -53,11 +46,23 @@ class _LoadingScreenState extends State<LoadingScreen> {
             colors: [Colors.purple, Colors.blue],
           ),
         ),
-        child:const SpinKitRing(
-          color: Colors.white,
-          size: 100.0,
-          lineWidth: 15.0,
-         
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget> [
+            Center(
+              child: SpinKitRing(
+                color: Colors.white,
+                size: 100.0,
+                lineWidth: 15.0,
+               
+              ),
+            ),
+            SizedBox(height: 40.0,),
+            Text('Unable to Access Current Location...'),
+            SizedBox(),
+            Text('Please Connect to the internet...'),
+
+          ],
         ),
       ),
     );
