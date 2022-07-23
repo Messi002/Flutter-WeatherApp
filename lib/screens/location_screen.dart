@@ -62,6 +62,7 @@ class _LocationScreenState extends State<LocationScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+             
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -69,14 +70,14 @@ class _LocationScreenState extends State<LocationScreen> {
                     onPressed: () {},
                     child: const Icon(
                       Icons.near_me,
-                      size: 50.0,
+                      size: 40.0,
                     ),
                   ),
                   TextButton(
                     onPressed: () {},
                     child: const Icon(
                       Icons.location_city,
-                      size: 50.0,
+                      size: 40.0,
                     ),
                   ),
                 ],
@@ -108,12 +109,13 @@ class _LocationScreenState extends State<LocationScreen> {
                 ),
               ),
              Padding(
-                padding: EdgeInsets.only(right: 15.0),
-                child: Text( '${TempCond}',
-                  textAlign: TextAlign.right,
+                padding: const EdgeInsets.only(right: 1.0),
+                child: Text( '$TempCond',
+                  textAlign: TextAlign.center,
                   style: kMessageTextStyle,
                 ),
               ),
+              const SizedBox(height: 6.0,)
             ],
           ),
         ),
