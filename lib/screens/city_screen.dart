@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
 
-
 // precipitation
 import 'package:flutter/material.dart';
 import 'package:precipatation/utilities/constants.dart';
@@ -39,7 +38,17 @@ class _CityScreenState extends State<CityScreen> {
               ),
               Container(
                 padding: EdgeInsets.all(20.0),
-                child: null,
+                child: TextField(
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Enter a city name',
+                      hintStyle: TextStyle(color: Colors.grey),
+                      icon: Icon(
+                        Icons.location_city,
+                        color: Colors.white,
+                      )),
+                ),
               ),
               TextButton(
                 onPressed: () {},

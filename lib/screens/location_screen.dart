@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
+import 'package:precipatation/screens/city_screen.dart';
 import 'package:precipatation/utilities/constants.dart';
 import 'package:precipatation/services/weather.dart';
 
@@ -28,7 +29,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void updateUI(dynamic weatherData) {
     setState(() {
-      if(weatherData == null) {
+      if (weatherData == null) {
         temperature = 0;
         weatherIcon = 'Error';
         cityName = '';
@@ -80,7 +81,14 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CityScreen(),
+                        ),
+                      );
+                    },
                     child: const Icon(
                       Icons.location_city,
                       size: 40.0,
@@ -90,9 +98,7 @@ class _LocationScreenState extends State<LocationScreen> {
               ),
               Center(
                 child: Text(
-                  // '$temperature',
-                  cityName ?? "Loading...",
-
+                  "$cityName",
                   style: kTempTextStyle,
                 ),
               ),
@@ -103,7 +109,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   children: <Widget>[
                     Text(
                       // '$temperature',
-                      '${temperature ?? "Loading..."}°C',
+                      '${temperature}°C',
 
                       style: kTempTextStyle,
                     ),
