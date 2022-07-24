@@ -5,44 +5,47 @@ import 'package:precipatation/utilities/constants.dart';
 import 'package:precipatation/services/weather.dart';
 
 class LocationScreen extends StatefulWidget {
-
-    LocationScreen({super.key,this.LocationWeather});
-    final LocationWeather;
+  LocationScreen({super.key, this.LocationWeather});
+  final LocationWeather;
 
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-
-    int? temperature=0;
+  int? temperature = 0;
   int? condition;
   String? cityName;
   String? weatherIcon;
-  WeatherModel weatherCondition =   WeatherModel();
-  String? TempCond; 
+  WeatherModel weatherCondition = WeatherModel();
+  String? TempCond;
 
   @override
   void initState() {
     super.initState();
     updateUI(widget.LocationWeather);
   }
-   
- void updateUI(dynamic weatherData){
-      setState(() {
-         var temp = weatherData['main']['temp'];
-         temperature = temp.toInt();
-      var condition = weatherData['weather'][0]['id'];
-     weatherIcon = weatherCondition.getWeatherIcon(condition);
-      var city = weatherData['name'];
-       cityName = city;
-      TempCond = weatherCondition.getMessage(temperature);
-       print(cityName);
-      print(temperature);
-      });
-  }
 
-  
+  void updateUI(dynamic weatherData) {
+    setState(() {
+      if(weatherData == null) {
+        temperature = 0;
+        weatherIcon = 'Error';
+        cityName = '';
+        TempCond = 'Unable to get weather data...';
+        return;
+      }
+      var temp = weatherData['main']['temp'];
+      temperature = temp.toInt();
+      var condition = weatherData['weather'][0]['id'];
+      weatherIcon = weatherCondition.getWeatherIcon(condition);
+      var city = weatherData['name'];
+      cityName = city;
+      TempCond = weatherCondition.getMessage(temperature);
+      print(cityName);
+      print(temperature);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,15 +65,14 @@ class _LocationScreenState extends State<LocationScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-             
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   TextButton(
-                    onPressed: () async{
-
-                        var weatherData = await weatherCondition.getLocationWeather();
-                        updateUI(weatherData);
+                    onPressed: () async {
+                      var weatherData =
+                          await weatherCondition.getLocationWeather();
+                      updateUI(weatherData);
                     },
                     child: const Icon(
                       Icons.near_me,
@@ -88,38 +90,41 @@ class _LocationScreenState extends State<LocationScreen> {
               ),
               Center(
                 child: Text(
-                      // '$temperature',
-                      cityName ?? "Loading...",
-                    
-                      style: kTempTextStyle,
-                    ),
+                  // '$temperature',
+                  cityName ?? "Loading...",
+
+                  style: kTempTextStyle,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                   Text(
+                    Text(
                       // '$temperature',
                       '${temperature ?? "Loading..."}°C',
-                    
+
                       style: kTempTextStyle,
                     ),
                     Text(
-                     ' $weatherIcon',
+                      ' $weatherIcon',
                       style: kConditionTextStyle,
                     ),
                   ],
                 ),
               ),
-             Padding(
+              Padding(
                 padding: const EdgeInsets.only(right: 1.0),
-                child: Text( '$TempCond',
+                child: Text(
+                  '$TempCond',
                   textAlign: TextAlign.center,
                   style: kMessageTextStyle,
                 ),
               ),
-              const SizedBox(height: 6.0,)
+              const SizedBox(
+                height: 6.0,
+              )
             ],
           ),
         ),
@@ -127,7 +132,3 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
-
-
-
-

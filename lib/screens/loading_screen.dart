@@ -58,9 +58,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
               ),
             ),
             SizedBox(height: 40.0,),
-            Text('Unable to Access Current Location...'),
-            SizedBox(),
-            Text('Please Connect to the internet...'),
+            Text('Loading...',style: TextStyle(fontSize: 18.0, letterSpacing: 3.0), ),
 
           ],
         ),
